@@ -1,18 +1,26 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <HelloWorld :data="dataList"/>
   </div>
 </template>
 
 <script>
 import HelloWorld from './components/HelloWorld.vue'
+import dataList from './data.js'
 
 export default {
   name: 'App',
   components: {
     HelloWorld
-  }
+  },
+  data() {
+    return {
+      dataList: [],
+    }
+  },
+  mounted() {
+    this.dataList = dataList;
+  },
 }
 </script>
 
@@ -23,6 +31,8 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+  margin: 100px;
+  border: 1px solid black;
+  background-color: grey;
 }
 </style>
