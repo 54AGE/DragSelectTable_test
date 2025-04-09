@@ -1,25 +1,17 @@
 <template>
   <div id="app">
-    <HelloWorld :data="dataList"/>
+    <HelloWorld/>
   </div>
 </template>
 
 <script>
 import HelloWorld from './components/HelloWorld.vue'
-import dataList from './data.js'
+
 
 export default {
   name: 'App',
   components: {
     HelloWorld
-  },
-  data() {
-    return {
-      dataList: [],
-    }
-  },
-  mounted() {
-    this.dataList = dataList;
   },
 }
 </script>

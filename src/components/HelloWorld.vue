@@ -13,12 +13,13 @@
 </template>
 
 <script>
+import dataList from './data.js'
 export default {
   name: 'testTable',
   props: {
     data: {
       type: Array,
-      default:() => []
+      default:() => dataList
     }
   },
   data() {
@@ -55,7 +56,7 @@ export default {
     }
   },
   methods: {
-    // 鼠标右键相关事件
+    // 鼠标右键按下
     slideBegin(e) {
       this.sliderData.parentX = this.$refs.mainDiv.offsetLeft;
       this.sliderData.parentY = this.$refs.mainDiv.offsetTop;
@@ -66,6 +67,7 @@ export default {
       document.addEventListener('mousemove', this.slideCourse, { passive: false });
       document.addEventListener('mouseup', this.slideEnd, { passive: false });
     },
+    // 鼠标拖动
     slideCourse(e) {
       e.preventDefault();
       e.stopPropagation();
@@ -75,6 +77,7 @@ export default {
         this.sliding = true;
       }
     },
+    // 鼠标右键放开
     slideEnd() {
       document.removeEventListener('mousemove', this.slideCourse, { passive: false });
       document.removeEventListener('mouseup', this.slideEnd, { passive: false });
@@ -106,9 +109,9 @@ export default {
           }
         }
       });
-      console.log(beginInd, endInd);
       this.selectByInd(beginInd, endInd);
     },
+    // 更改选中状态
     selectByInd(beginInd, endInd) {
       this.data.slice(beginInd, endInd)
       .forEach((item) => {
