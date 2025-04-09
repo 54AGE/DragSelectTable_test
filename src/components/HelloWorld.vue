@@ -1,14 +1,17 @@
 <template>
-  <div class="mainDiv" ref="mainDiv" @mousedown.right.prevent="slideBegin" @contextmenu.prevent="()=>{}">
-    <el-table :data="data" ref="table" @selection-change="selectionChange" :select-on-indeterminate="false">
-      <el-table-column type="selection" width="55"/>
-      <el-table-column prop="seatNo" min-width='74px' label="自编号" />
-      <el-table-column prop="code" label="标本编号" min-width='118px' />
-      <el-table-column prop="name" label="姓名" min-width="65px" />
-      <el-table-column prop="inspectProjectType" label="套餐名称" min-width='95px' type="BasComboInfoMaster"/>
-      <el-table-column prop="age" label="年龄" min-width='53px' />
-    </el-table>
-    <div class="slider" :style="`top:${sTop}px; left:${sLeft}px; height:${sHeight}px; width:${sWidth}px;`" v-show="sliding"/>
+  <div>
+    <el-switch v-model="multiType" active-text="取消勾选" inactive-text="不做处理"/>
+    <div class="mainDiv" ref="mainDiv" @mousedown.right.prevent="slideBegin" @contextmenu.prevent="()=>{}">
+      <el-table :data="data" ref="table" @selection-change="selectionChange" :select-on-indeterminate="false">
+        <el-table-column type="selection" width="55"/>
+        <el-table-column prop="seatNo" min-width='74px' label="自编号" />
+        <el-table-column prop="code" label="标本编号" min-width='118px' />
+        <el-table-column prop="name" label="姓名" min-width="65px" />
+        <el-table-column prop="inspectProjectType" label="套餐名称" min-width='95px' type="BasComboInfoMaster"/>
+        <el-table-column prop="age" label="年龄" min-width='53px' />
+      </el-table>
+      <div class="slider" :style="`top:${sTop}px; left:${sLeft}px; height:${sHeight}px; width:${sWidth}px;`" v-show="sliding"/>
+    </div>
   </div>
 </template>
 
@@ -24,6 +27,7 @@ export default {
   },
   data() {
     return {
+      multiType: false,
       sliding: false,
       sliderData: {
         parentX: 0,
@@ -115,7 +119,12 @@ export default {
     selectByInd(beginInd, endInd) {
       this.data.slice(beginInd, endInd)
       .forEach((item) => {
-        this.$refs.table.toggleRowSelection(item, true);
+        if(this.multiType) {
+          this.$refs.table.toggleRowSelection(item);
+        }
+        else {
+          this.$refs.table.toggleRowSelection(item, true);
+        }
       })
     },
     selectionChange(val) {
